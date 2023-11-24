@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private MqttService mqttService;
     private ExecutorService executor = Executors.newFixedThreadPool(1);
     private Button btEnvoyer;
+    private ConstraintLayout layout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.btEnvoyer = findViewById(R.id.btEnvoyer);
         this.btEnvoyer.setOnClickListener(e->publier());
+        this.layout=findViewById(R.id.window);
+        this.layout.setBackgroundColor(ContextCompat.getColor(this, R.color.rouge3));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
