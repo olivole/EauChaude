@@ -66,14 +66,11 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
         unregisterReceiver(receiver);
-        //       arreterServiceMqtt();
     }
-
 
     @SuppressLint("ObsoleteSdkInt")
     private static boolean isInternetConnected(Context getApplicationContext) {
@@ -93,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return status;
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(receiver, creerIntentFilter());
     }
 
     private void demarrerServiceMqtt() {
