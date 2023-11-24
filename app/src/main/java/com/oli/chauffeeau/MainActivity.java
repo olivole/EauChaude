@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MqttService mqttService;
     private ExecutorService executor = Executors.newFixedThreadPool(1);
-    private Button btEnvoyer;
+    private ImageButton btEnvoyer;
     private ConstraintLayout layout;
 
     @Override
