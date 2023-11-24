@@ -35,33 +35,33 @@ public class MqttService {
     private final IMqttActionListener mqttActionListener = new IMqttActionListener() {
         @Override
         public void onSuccess(IMqttToken asyncActionToken) {
-                      Log.i(TAG, "Succes");
+                      // Log.i(TAG, "Succes");
                        broadcastUpdate(ACTION_MQTT_SUCCES, "Succes");
         }
 
         @Override
         public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-            Log.w(TAG, "Erreur : " + exception.getMessage());
+            // Log.w(TAG, "Erreur : " + exception.getMessage());
             broadcastUpdate(ACTION_MQTT_FAILURE, "Erreur : " + exception.getMessage());
         }
     };
     private final MqttCallback mqttCallback = new MqttCallback() {
         @Override
         public void connectionLost(Throwable cause) {
-            Log.i(TAG, "Connexion au serveur MQTT perdue : " + cause.getMessage());
+            // Log.i(TAG, "Connexion au serveur MQTT perdue : " + cause.getMessage());
             broadcastUpdate(ACTION_MQTT_MESSAGE, "Connexion au serveur MQTT perdue : " + cause.getMessage());
         }
 
         @Override
         public void messageArrived(String topic, MqttMessage message) throws Exception {
-            Log.i(TAG, "Message reçu. Topic : " + topic + " :  " + message.toString());
+            // Log.i(TAG, "Message reçu. Topic : " + topic + " :  " + message.toString());
             broadcastUpdate(ACTION_MQTT_MESSAGE, "Message reçu. Topic : " + topic + " :  " + message.toString());
         }
 
         @Override
         public void deliveryComplete(IMqttDeliveryToken token) {
 
-            //             Log.i(TAG, "Message reçu par le serveur " + token.getMessage().toString());
+            //             // Log.i(TAG, "Message reçu par le serveur " + token.getMessage().toString());
             broadcastUpdate(ACTION_MQTT_MESSAGE, "Message reçu par le serveur ");
         }
     };
