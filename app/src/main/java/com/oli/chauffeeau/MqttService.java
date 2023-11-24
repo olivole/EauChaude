@@ -12,6 +12,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,9 +89,11 @@ public class MqttService {
     }
 
     public String message() {
+        String sHeure = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
         StringBuffer json = new StringBuffer("{");
-        json.append("\"value\"" + ":\"" + "ON" + "\"");
+        json.append("\"time\":\"" + sHeure+"\",\"value\"" + ":\"" + "ON" + "\"");
         json.append("}");
         return json.toString();
     }
+
 }
