@@ -47,16 +47,19 @@ import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 import org.eclipse.paho.client.mqttv3.MqttToken;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.SparseArray;
 
+import androidx.annotation.RequiresApi;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
@@ -96,7 +99,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 		MANUAL_ACK
 	}
 
-	private static final String SERVICE_NAME = "mqtt.MqttService";
+	private static final String SERVICE_NAME = "MqttService";
 
 	private static final int BIND_SERVICE_FLAG = 0;
 
@@ -393,6 +396,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *             for any connected problems, including communication errors
 	 */
 
+	@RequiresApi(api = Build.VERSION_CODES.S)
 	@Override
 	public IMqttToken connect(MqttConnectOptions options, Object userContext,
 			IMqttActionListener callback) throws MqttException {
@@ -411,13 +415,14 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 		 */
 		if (mqttService == null) { // First time - must bind to the service
 			Intent serviceStartIntent = new Intent();
-			serviceStartIntent.setClassName(myContext, SERVICE_NAME);
+			String serviceName = this.getClass().getPackageName().toString() + "." +SERVICE_NAME;
+			serviceStartIntent.setClassName(myContext, serviceName);
 			Object service = myContext.startService(serviceStartIntent);
 			if (service == null) {
 				IMqttActionListener listener = token.getActionCallback();
 				if (listener != null) {
 					listener.onFailure(token, new RuntimeException(
-							"cannot start service " + SERVICE_NAME));
+							"cannot start service " + serviceName));
 				}
 			}
 
