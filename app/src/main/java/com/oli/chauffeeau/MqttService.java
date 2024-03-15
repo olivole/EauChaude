@@ -27,7 +27,7 @@ public class MqttService {
     private static final String MOSQUITO_USER_NAME = "homeassistant";
     private static final String MOSQUITO_MDP = "ohShiruheipi0eganierah7io2aithee9ahthe9Aa9iQu8cifiu2ui3ahdiutha9";
     public static final String ACTION_MQTT_MESSAGE_PUBLIE = "ACTION_MQTT_MESSAGE_PUBLIE";
-    private static final String TOPIC = "chauffe_eau/COMMUTATEUR";
+    private static final String TOPIC = "chauffe_eau/COMMUTATEUR_POMPE";
     private final MainActivity main;
 
     private MqttClient mqttClient;
