@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class MqttService {
     //private static final String SERVER_URI = "tcp://broker.hivemq.com:1883"; // Serveur de test HiveMQ
-    private static final String SERVER_URI = "tcp://homeassistant:1883";
+    private static final String SERVER_URI = "tcp://192.168.1.2:1883";
     public static final String ACTION_MQTT_SUCCES = "SERVEUR_MQTT_SUCCES";
     public static final String ACTION_MQTT_FAILURE = "SERVEUR_MQTT_FAILURE";
     public static final String TAG = "MonLog";
