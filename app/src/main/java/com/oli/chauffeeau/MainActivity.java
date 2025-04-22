@@ -2,7 +2,6 @@ package com.oli.chauffeeau;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +10,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -24,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+// test
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MonLog";
 
@@ -35,9 +35,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        testPermissionsAlarm();
         initialiserVuePrincipal();
         this.mqttService = new MqttService(this);
         demarrerServiceMqtt();
+    }
+
+    private void testPermissionsAlarm() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            AlarmManager alarmManager = ((AlarmManager) getSystemService(ALARM_SERVICE));
+            if (alarmManager.canScheduleExactAlarms() == false){
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                this.startActivity(intent);
+            }
+        }
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -65,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
     private void initialiserVuePrincipal() {
         setContentView(R.layout.activity_main);
         this.btEnvoyer = findViewById(R.id.btEnvoyer);
-        this.btEnvoyer.setOnClickListener(e->publier());
-        this.layout=findViewById(R.id.window);
+        this.btEnvoyer.setOnClickListener(e -> publier());
+        this.layout = findViewById(R.id.window);
         this.layout.setBackgroundColor(ContextCompat.getColor(this, R.color.rouge3));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
@@ -96,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return status;
     }
+
     @Override
     protected void onResume() {
         super.onResume();
